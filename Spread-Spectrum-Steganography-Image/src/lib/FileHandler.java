@@ -50,7 +50,7 @@ public class FileHandler {
         return message.toString();
     }
 
-    public String getMessageUtf8(String path) throws IOException {
+    public String getMessageUTF8(String path) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         String message = Base64.getEncoder().encodeToString(bytes);
         return message;
@@ -80,7 +80,7 @@ public class FileHandler {
         }
     }
 
-    public boolean saveMessageUtf8(String messageencode, String path) {
+    public boolean saveMessageUTF8(String messageencode, String path) {
         
         byte[] decode = Base64.getDecoder().decode(messageencode);
         String messagedecode = new String(decode, StandardCharsets.UTF_8);

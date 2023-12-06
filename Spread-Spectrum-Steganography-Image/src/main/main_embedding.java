@@ -5,6 +5,7 @@
 package main;
 
 import Controllers.EmbeddingController;
+import java.io.IOException;
 
 /**
  *
@@ -15,7 +16,7 @@ public class main_embedding {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         Boolean flas =new EmbeddingController(
             ".\\textvn.txt",

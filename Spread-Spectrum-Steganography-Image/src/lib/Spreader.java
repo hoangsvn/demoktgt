@@ -11,7 +11,7 @@ public class Spreader {
          
         return spreadingBits;
     }
-
+   
     public StringBuilder deSpreading(StringBuilder spreadingBits) {
         StringBuilder binary = new StringBuilder();
         for (int i = 0; i < spreadingBits.length(); i += 4) {
