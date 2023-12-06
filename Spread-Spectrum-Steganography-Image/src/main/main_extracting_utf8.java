@@ -4,19 +4,18 @@
  */
 package main;
 
- 
 import Controllers.ExtractingController;
 
 /**
  *
  * @author Admin
  */
-public class main_extracting {
+public class main_extracting_utf8 {
     public static void main(String[] args) {
         Boolean flags = new ExtractingController(
             ".\\anh goc sau khi giau tin spread spectrum vn.png",
             ".\\extracvn.txt",
-            "123456").extractMessage();
+            "123456").extractMessageUtf8();
         System.out.print(flags);
     }
 }
