@@ -19,7 +19,7 @@ public class EmbeddingController {
         this.imagePath = imagePath;
         this.stegoPath = stegoPath;
         this.key = key;
-        this.message = new FileHandler().getMessageUTF8(messagePath);
+        this.message = new FileHandler().getMessageUTF8Encode(messagePath);
     }
 
     public boolean generateStegoImage() {

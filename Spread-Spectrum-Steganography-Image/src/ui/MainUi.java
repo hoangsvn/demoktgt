@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
- 
+
 import Controllers.EmbeddingController;
 import Controllers.ExtractingController;
+import controllers.CheckSegatoImage;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -26,7 +27,6 @@ public class MainUi extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -37,6 +37,7 @@ public class MainUi extends javax.swing.JFrame {
         image = new javax.swing.JLabel();
         key = new javax.swing.JTextField();
         extbtn = new javax.swing.JButton();
+        checkbutton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,6 +76,13 @@ public class MainUi extends javax.swing.JFrame {
             }
         });
 
+        checkbutton.setText("Check Image");
+        checkbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkbuttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,15 +90,16 @@ public class MainUi extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputimage_file, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+                    .addComponent(inputimage_file)
                     .addComponent(inputtext_file)
-                    .addComponent(image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(key)
+                    .addComponent(image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(embbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(extbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4)))
+                        .addComponent(checkbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                        .addComponent(embbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                        .addComponent(extbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -102,21 +111,20 @@ public class MainUi extends javax.swing.JFrame {
                 .addComponent(inputtext_file, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(key, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(embbtn)
-                    .addComponent(extbtn))
-                .addGap(20, 20, 20))
+                    .addComponent(extbtn)
+                    .addComponent(checkbutton))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
-    
+
     private void inputimage_fileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputimage_fileMouseClicked
 
         JFileChooser fileChooser = new JFileChooser();
@@ -127,7 +135,7 @@ public class MainUi extends javax.swing.JFrame {
             String inputimagefile_path = fileChooser.getSelectedFile().toString();
             inputimage_file.setText(inputimagefile_path);
             ImageIcon ima = new ImageIcon(inputimagefile_path);
-            setSize(ima.getIconWidth()+40, ima.getIconHeight()+40);
+            setSize(ima.getIconWidth() + 40, ima.getIconHeight() + 40);
             setResizable(false);
             image.setIcon(ima);
         } else {
@@ -135,8 +143,7 @@ public class MainUi extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_inputimage_fileMouseClicked
 
-    
-    
+
     private void inputtext_fileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputtext_fileMouseClicked
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("TXT Files", "txt"));
@@ -151,53 +158,68 @@ public class MainUi extends javax.swing.JFrame {
     }//GEN-LAST:event_inputtext_fileMouseClicked
 
     private void embbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_embbtnActionPerformed
-        if ( !inputimage_file.getText().isBlank() && !inputtext_file.getText().isBlank() && !key.getText().isBlank() ){
+        if (!inputimage_file.getText().isBlank() && !inputtext_file.getText().isBlank() && !key.getText().isBlank()) {
             try {
-                String stringoutfile = inputimage_file.getText().replace(".png", " emberdding")+".png";
-                Boolean flas =new EmbeddingController( 
-                    inputtext_file.getText(), 
-                    inputimage_file.getText(),  
-                    stringoutfile , 
-                    key.getText())
-                    .generateStegoImage();
-                if (flas){
-                    JOptionPane.showMessageDialog(null, "OUTFILE :"+stringoutfile , "Success", JOptionPane.INFORMATION_MESSAGE);
+                String stringoutfile = inputimage_file.getText().replace(".png", " emberdding") + ".png";
+
+                Boolean flas = new EmbeddingController(
+                        inputtext_file.getText(),
+                        inputimage_file.getText(),
+                        stringoutfile,
+                        key.getText())
+                        .generateStegoImage();
+                if (flas) {
+                    JOptionPane.showMessageDialog(null, "OUTFILE :" + stringoutfile, "Success", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog( null, "Thu lai", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Thu lai", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                System.out.print(flas );
+                System.out.print(flas);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog( null, "Check : File and Key", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Check : File and Key", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else{
-            JOptionPane.showMessageDialog( null, "Error : File and Key not blank", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error : File and Key not blank", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_embbtnActionPerformed
 
     private void extbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extbtnActionPerformed
-         if ( !inputimage_file.getText().isBlank()  && !key.getText().isBlank() ){
-            try {
-                String stringoutfile = inputimage_file.getText().replace(".png", " extracting data")+".txt";
+        if (!inputimage_file.getText().isBlank() && !key.getText().isBlank()) {
+            try { 
+                String stringoutfile = inputimage_file.getText().replace(".png", " extracting data") + ".txt";
                 Boolean flag = new ExtractingController(
-                    inputimage_file.getText(),
-                    stringoutfile,
-                    key.getText())
-                    .extractMessage();
-                if (flag){
-                    JOptionPane.showMessageDialog(null, "OUTFILE :"+stringoutfile , "Success", JOptionPane.INFORMATION_MESSAGE);
+                        inputimage_file.getText(),
+                        stringoutfile,
+                        key.getText())
+                        .extractMessage();
+                if (flag) {
+                    JOptionPane.showMessageDialog(null, "OUTFILE :" + stringoutfile, "Success", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog( null, "Thu lai", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error Please Press Check Buttun", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                System.out.print(flag );
+                System.out.println(flag);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog( null, "Check : File and Key", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Check : File and Key", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else{
-            JOptionPane.showMessageDialog( null, "Error : File and Key not blank", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error : File and Key not blank", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_extbtnActionPerformed
+
+    private void checkbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbuttonActionPerformed
+        if (inputimage_file.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Input File Image ", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Boolean flags = new CheckSegatoImage(inputimage_file.getText()).Check();
+        if (flags) {
+            JOptionPane.showMessageDialog(null, "Check Success", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No Flags", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_checkbuttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,6 +258,7 @@ public class MainUi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton checkbutton;
     private javax.swing.JButton embbtn;
     private javax.swing.JButton extbtn;
     private javax.swing.JLabel image;

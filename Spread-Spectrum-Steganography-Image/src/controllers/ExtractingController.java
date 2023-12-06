@@ -4,7 +4,9 @@ import controllers.CheckSegatoImage;
 import lib.*;
 
 import java.awt.image.BufferedImage;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class ExtractingController {
 
@@ -65,7 +67,9 @@ public class ExtractingController {
         filehander.log(resultBinary.toString());
         filehander.log(messageDemodulation.toString());
         filehander.log(messageDespreading.toString());
-        return filehander.saveMessageUTF8(message, resultMessagePath);
+        byte[] decode = Base64.getDecoder().decode(message);
+        String messagedecode = new String(decode, StandardCharsets.UTF_8);
+        return filehander.saveMessageUTF8(messagedecode, resultMessagePath);
     }
 
 }
